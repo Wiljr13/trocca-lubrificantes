@@ -396,7 +396,7 @@ p {
   height: 48%;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.02), rgba(8, 13, 29, 0.18)),
-    url("assets/compass%20hero.avif");
+    url("assets/compass-hero.avif");
   background-position: center 52%;
   border-radius: 42px 42px 18px 18px;
 }
