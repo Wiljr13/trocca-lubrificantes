@@ -61,7 +61,7 @@
       .slice(0, 3)
       .forEach((item) => {
         const link = document.createElement("a");
-        link.href = `../${item.slug}/index.html`;
+        link.href = `/servicos/${item.slug}/`;
         link.textContent = item.title;
         related.appendChild(link);
       });

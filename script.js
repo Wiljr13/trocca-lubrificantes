@@ -2,14 +2,14 @@ const menuButton = document.querySelector(".menu-toggle");
 const nav = document.querySelector(".site-nav");
 
 const serviceHashRoutes = {
-  "#cambio-automatico": "servicos/cambio-automatico/index.html",
-  "#oleo-motor": "servicos/oleo-motor/index.html",
-  "#freios-pastilhas": "servicos/freios-pastilhas/index.html",
-  "#fluido-radiador": "servicos/fluido-radiador/index.html",
-  "#suspensao-amortecedores": "servicos/suspensao-amortecedores/index.html",
-  "#revisao-preventiva": "servicos/revisao-preventiva/index.html",
-  "#delay-acelerador": "servicos/delay-acelerador/index.html",
-  "#diagnostico-automotivo": "servicos/diagnostico-automotivo/index.html",
+  "#cambio-automatico": "/servicos/cambio-automatico/",
+  "#oleo-motor": "/servicos/oleo-motor/",
+  "#freios-pastilhas": "/servicos/freios-pastilhas/",
+  "#fluido-radiador": "/servicos/fluido-radiador/",
+  "#suspensao-amortecedores": "/servicos/suspensao-amortecedores/",
+  "#revisao-preventiva": "/servicos/revisao-preventiva/",
+  "#delay-acelerador": "/servicos/delay-acelerador/",
+  "#diagnostico-automotivo": "/servicos/diagnostico-automotivo/",
 };
 
 if (location.pathname.endsWith("/servicos.html") && serviceHashRoutes[location.hash]) {
