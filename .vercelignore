@@ -1,0 +1,4 @@
+.google-review-token.json
+client_secret*.json
+google-reviews-sync*.log
+tools/

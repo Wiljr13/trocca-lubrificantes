@@ -1,0 +1,1 @@
+window.TROCCA_GOOGLE_REVIEWS = [];
