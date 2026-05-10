@@ -2221,3 +2221,47 @@ details p {
     padding: 22px;
   }
 }
+
+.site-footer .footer-grid {
+  grid-template-columns: auto 1fr auto;
+}
+
+.site-footer .footer-socials {
+  justify-self: end;
+}
+
+.site-footer .footer-links {
+  justify-self: start;
+  gap: 0;
+  white-space: nowrap;
+}
+
+.site-footer .footer-links a {
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.site-footer .footer-links a + a::before {
+  content: "|";
+  display: inline-block;
+  margin: 0 12px;
+  color: rgba(9, 42, 78, 0.45);
+  text-decoration: none;
+}
+
+.site-footer small {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 900px) {
+  .site-footer .footer-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .site-footer .footer-socials,
+  .site-footer .footer-links {
+    justify-self: center;
+  }
+}
