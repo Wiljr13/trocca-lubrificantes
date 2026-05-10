@@ -2242,11 +2242,8 @@ details p {
 }
 
 .site-footer .footer-links a + a::before {
-  content: "|";
-  display: inline-block;
-  margin: 0 12px;
-  color: rgba(9, 42, 78, 0.45);
-  text-decoration: none;
+  content: none;
+  display: none;
 }
 
 .site-footer small {
@@ -2281,7 +2278,7 @@ details p {
   justify-self: start;
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 12px;
   white-space: nowrap;
 }
 
@@ -2298,11 +2295,8 @@ details p {
 }
 
 .site-footer .footer-links a + a::before {
-  content: "|";
-  display: inline-block;
-  margin: 0 12px;
-  color: rgba(9, 42, 78, 0.45);
-  text-decoration: none;
+  content: none;
+  display: none;
 }
 
 .site-footer .footer-socials {
@@ -2334,4 +2328,10 @@ details p {
   .site-footer small {
     white-space: normal;
   }
+}
+
+.site-footer .footer-separator {
+  color: rgba(9, 42, 78, 0.55);
+  font-weight: 500;
+  opacity: 0.9;
 }
