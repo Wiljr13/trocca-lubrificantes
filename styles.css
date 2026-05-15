@@ -1572,6 +1572,7 @@ details p {
 }
 
 .map-card {
+  position: relative;
   overflow: hidden;
   min-height: 280px;
   background: #fff;
@@ -1585,6 +1586,58 @@ details p {
   width: 100%;
   height: 320px;
   border: 0;
+}
+
+.map-consent {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  padding: 28px;
+  color: var(--blue-dark);
+  background: linear-gradient(135deg, #eef6ff 0%, #fff 100%);
+}
+
+.map-consent strong {
+  font-size: 1.2rem;
+}
+
+.map-consent p {
+  max-width: 420px;
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.map-consent div {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.map-consent button,
+.map-consent a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 15px;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 900;
+  border-radius: 10px;
+}
+
+.map-consent button {
+  color: #fff;
+  background: var(--green);
+  border: 0;
+  cursor: pointer;
+}
+
+.map-consent a {
+  color: var(--blue-dark);
+  border: 1px solid rgba(9, 42, 78, 0.18);
 }
 
 .floating-whatsapp {
@@ -2335,4 +2388,114 @@ details p {
   color: rgba(9, 42, 78, 0.55);
   font-weight: 500;
   opacity: 0.9;
+}
+
+.cookie-banner {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 200;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px 22px;
+  width: min(720px, calc(100vw - 40px));
+  padding: 22px;
+  color: #fff;
+  background: rgba(7, 16, 34, 0.96);
+  border: 1px solid rgba(143, 202, 255, 0.28);
+  border-radius: 14px;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.32);
+}
+
+.cookie-banner__copy strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.cookie-banner__copy p {
+  margin: 0 0 8px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.cookie-banner__copy a {
+  color: #9bd8ff;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.cookie-banner__preferences {
+  grid-column: 1 / -1;
+  padding: 12px 14px;
+  color: rgba(255, 255, 255, 0.86);
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+}
+
+.cookie-banner__preferences label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.cookie-banner__actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.cookie-banner button,
+.privacy-action {
+  min-height: 42px;
+  padding: 0 16px;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 900;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.cookie-primary,
+.privacy-action {
+  color: #fff;
+  background: var(--green);
+  border: 1px solid transparent;
+}
+
+.cookie-secondary {
+  color: #dbe9ff;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.privacy-action {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 14px;
+  text-decoration: none;
+}
+
+@media (max-width: 720px) {
+  .cookie-banner {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    grid-template-columns: 1fr;
+    width: auto;
+    padding: 18px;
+  }
+
+  .cookie-banner__actions {
+    justify-content: stretch;
+  }
+
+  .cookie-banner button {
+    width: 100%;
+  }
 }

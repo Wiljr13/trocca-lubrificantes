@@ -1,3 +1,126 @@
+const cookieConsentKey = "trocca_cookie_consent_v1";
+
+function updateConsent(granted) {
+  if (typeof window.gtag === "function") {
+    window.gtag("consent", "update", {
+      ad_storage: granted ? "granted" : "denied",
+      ad_user_data: granted ? "granted" : "denied",
+      ad_personalization: granted ? "granted" : "denied",
+      analytics_storage: granted ? "granted" : "denied",
+      functionality_storage: "granted",
+      security_storage: "granted",
+    });
+  }
+}
+
+function loadGoogleTagManager() {
+  const gtmId = window.TROCCA_GTM_ID;
+  if (!gtmId || document.querySelector(`script[data-gtm-id="${gtmId}"]`)) return;
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+
+  const firstScript = document.getElementsByTagName("script")[0];
+  const gtmScript = document.createElement("script");
+  gtmScript.async = true;
+  gtmScript.dataset.gtmId = gtmId;
+  gtmScript.src = `https://www.googletagmanager.com/gtm.js?id=${gtmId}`;
+  firstScript.parentNode.insertBefore(gtmScript, firstScript);
+}
+
+function loadConsentEmbeds() {
+  document.querySelectorAll("iframe[data-consent-src]").forEach((iframe) => {
+    iframe.src = iframe.dataset.consentSrc;
+    iframe.removeAttribute("data-consent-src");
+    iframe.closest(".map-card")?.querySelector(".map-consent")?.remove();
+  });
+}
+
+function saveCookieConsent(value) {
+  localStorage.setItem(cookieConsentKey, value);
+  const granted = value === "accepted";
+  updateConsent(granted);
+  if (granted) {
+    loadGoogleTagManager();
+    loadConsentEmbeds();
+  }
+  document.querySelector(".cookie-banner")?.remove();
+}
+
+function showCookieBanner() {
+  document.querySelector(".cookie-banner")?.remove();
+
+  const banner = document.createElement("section");
+  banner.className = "cookie-banner";
+  banner.setAttribute("aria-label", "Preferências de cookies");
+  banner.innerHTML = `
+    <div class="cookie-banner__copy">
+      <strong>Privacidade e cookies</strong>
+      <p>Usamos cookies necessários para o site funcionar e, com sua autorização, cookies de medição e anúncios para Google Ads, Meta Ads e TikTok Ads.</p>
+      <a href="/politica-de-privacidade/#cookies">Ver Política de Privacidade</a>
+    </div>
+    <div class="cookie-banner__preferences" hidden>
+      <label>
+        <input type="checkbox" data-cookie-marketing />
+        Permitir cookies de medição e anúncios
+      </label>
+    </div>
+    <div class="cookie-banner__actions">
+      <button type="button" class="cookie-secondary" data-cookie-manage>Gerenciar preferências</button>
+      <button type="button" class="cookie-secondary" data-cookie-reject>Recusar não essenciais</button>
+      <button type="button" class="cookie-primary" data-cookie-accept>Aceitar todos</button>
+      <button type="button" class="cookie-primary" data-cookie-save hidden>Salvar escolhas</button>
+    </div>
+  `;
+
+  document.body.appendChild(banner);
+
+  const preferences = banner.querySelector(".cookie-banner__preferences");
+  const saveButton = banner.querySelector("[data-cookie-save]");
+  const manageButton = banner.querySelector("[data-cookie-manage]");
+
+  banner.querySelector("[data-cookie-accept]").addEventListener("click", () => saveCookieConsent("accepted"));
+  banner.querySelector("[data-cookie-reject]").addEventListener("click", () => saveCookieConsent("declined"));
+  manageButton.addEventListener("click", () => {
+    preferences.hidden = false;
+    saveButton.hidden = false;
+    manageButton.hidden = true;
+  });
+  saveButton.addEventListener("click", () => {
+    const allowed = banner.querySelector("[data-cookie-marketing]").checked;
+    saveCookieConsent(allowed ? "accepted" : "declined");
+  });
+}
+
+const existingCookieConsent = localStorage.getItem(cookieConsentKey);
+if (existingCookieConsent === "accepted") {
+  updateConsent(true);
+  loadGoogleTagManager();
+  if (document.readyState === "loading") {
+    window.addEventListener("DOMContentLoaded", loadConsentEmbeds);
+  } else {
+    loadConsentEmbeds();
+  }
+} else if (existingCookieConsent === "declined") {
+  updateConsent(false);
+} else {
+  window.addEventListener("DOMContentLoaded", showCookieBanner);
+}
+
+document.addEventListener("click", (event) => {
+  const trigger = event.target.closest("[data-cookie-preferences]");
+  if (!trigger) return;
+  event.preventDefault();
+  showCookieBanner();
+});
+
+document.addEventListener("click", (event) => {
+  const trigger = event.target.closest("[data-cookie-accept-all]");
+  if (!trigger) return;
+  event.preventDefault();
+  saveCookieConsent("accepted");
+});
+
 const menuButton = document.querySelector(".menu-toggle");
 const nav = document.querySelector(".site-nav");
 
@@ -195,7 +318,7 @@ function createBrandCard([name, slug]) {
   card.className = "brand-card";
 
   const logo = document.createElement("img");
-  logo.src = `https://cdn.simpleicons.org/${slug}/ffffff`;
+  logo.src = `/assets/brand-logos/${slug}.svg`;
   logo.alt = "";
   logo.loading = "lazy";
   logo.addEventListener("error", () => {
